@@ -23,13 +23,21 @@ func main() {
 		log.Fatalln("You did something stupid", err)
 	}
 	
-	// Starstruck preparations
-	noun:= 12
-	verb:= 2
-	records, err:= stringValuesToInts(input_records)
-	result:= IntCodeComputer(records, noun, verb) 
-	fmt.Println("Result:", result)
+	for n:=0; n<99; n++ {
+		for v:=0; v<99; v++ {
+			records, err:= stringValuesToInts(input_records)
+			if err != nil {
+				log.Fatalln("You did something stupid", err)
+			}
 
+			if IntCodeComputer(records, n, v) != 19690720 {
+				continue
+			}
+			fmt.Println("Noun:", n)
+			fmt.Println("Verb:", v)
+			fmt.Println("100 * Noun + Verb equals", 100*n+v)
+		}
+	}
 }
 
 // IntCodeComputer yeah
