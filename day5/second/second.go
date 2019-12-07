@@ -35,19 +35,14 @@ func main() {
 
 // IntCodeComputer yeah
 func IntCodeComputer(records []int) {
-
-	noRecords := len(records)
-
 	n := 0
-	for n < noRecords {
+	for n < len(records) {
 		opcode := records[n] % 100
 		//probably not used for now
 		mode3 := records[n] / 10000
 		mode2 := (records[n] - mode3*10000) / 1000
 		mode1 := (records[n] - mode2*1000) / 100
-		if opcode == 99 {
-			return
-		}
+
 		switch opcode {
 		case 1:
 			targetPosition := records[n+3]
@@ -62,16 +57,20 @@ func IntCodeComputer(records []int) {
 			records[targetPosition] = parameterValue1 * parameterValue2
 			n += 4
 		case 3:
-			targetPosition := records[n+1]
-			fmt.Println("Give input:")
+			fmt.Println("Give me your prefered system id:")
 			reader := bufio.NewReader(os.Stdin)
-			input, _ := reader.ReadString('\n')
-			input = strings.TrimSuffix(input, "\n")
-			inputt, err := strconv.Atoi(input)
+			input, err := reader.ReadString('\n')
 			if err != nil {
-				log.Fatalln("You did something stupid", err)
+				log.Fatalln("You did something wrong during entering your prefered system id", err)
 			}
-			records[targetPosition] = inputt
+			input = strings.TrimSuffix(input, "\n")
+			systemID, err := strconv.Atoi(input)
+			if err != nil {
+				log.Fatalln("Your program is as stupid as you are", err)
+			}
+
+			targetPosition := records[n+1]
+			records[targetPosition] = systemID
 			n += 2
 		case 4:
 			parameterValue1 := calcParamValue(records, mode1, n+1)
@@ -113,8 +112,9 @@ func IntCodeComputer(records []int) {
 				records[targetPosition] = 0
 			}
 			n += 4
+		case 99:
+			return
 		}
-
 	}
 }
 
