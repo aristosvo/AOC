@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 type cpu struct {
@@ -29,11 +30,14 @@ func main() {
 		log.Fatalln("You did something stupid", err)
 	}
 
+	fmt.Println("Question 1:")
+	fmt.Println(strings.Repeat("-", 30), "\nBOOST keycode of test run:")
 	CPUMem1 := fillCPUMem(basicOperationOfSystemTest)
-
 	IntCodeComputer(&CPUMem1, 1)
-	CPUMem2 := fillCPUMem(basicOperationOfSystemTest)
 
+	fmt.Println(strings.Repeat("-", 30))
+	fmt.Println("\nQuestion 2:", "\n"+strings.Repeat("-", 30), "\nThe coordinates of the distress signal:")
+	CPUMem2 := fillCPUMem(basicOperationOfSystemTest)
 	IntCodeComputer(&CPUMem2, 2)
 
 }
